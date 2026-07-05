@@ -102,6 +102,306 @@
         "en": "Ollie is the oldest and wisest owl in the forest. He guides Finn and the other animals with patience, teaching them that asking for help is a sign of bravery.",
         "it": "Ollie è il gufo più anziano e saggio della foresta. Guida Finn e gli altri animali con pazienza, insegnando loro che chiedere aiuto è un segno di coraggio."
       }
+    },
+    {
+      "id": "char-1783281415621-1",
+      "bookId": "whispering-forest",
+      "name": "Jasper The Hedgehog",
+      "image": "/uploads/char_Jasper_1783281592180.jpg",
+      "bio": {
+        "en": "A grumpy hedgehog who uses his prickly quills to protect himself when he's scared. He will soon learn that kindness is the best way to open up to the world.",
+        "it": "Un riccio burbero che usa i suoi aculei per proteggersi quando ha paura. Imparerà ben presto che la gentilezza è il modo migliore per aprirsi al mondo."
+      }
+    },
+    {
+      "id": "char-1783281415621-2",
+      "bookId": "whispering-forest",
+      "name": "Brauny The Badger",
+      "image": "/uploads/char_Brauny_1783281636741.jpg",
+      "bio": {
+        "en": "A big and sturdy badger who is easily overwhelmed by loud noises. He teaches everyone that, sometimes, lowering your voice is the best way to be heard.",
+        "it": "Un grande e robusto tasso che viene facilmente sopraffatto dai rumori forti. Insegna a tutti che, a volte, abbassare la voce è il modo più bello per essere ascoltati."
+      }
+    },
+    {
+      "id": "char-1783281415621-3",
+      "bookId": "whispering-forest",
+      "name": "Piper The Squirrel",
+      "image": "/uploads/char_Piper_1783281668217.jpg",
+      "bio": {
+        "en": "A little squirrel who is very protective of the shiny things she finds. She will discover that sharing beauty with a friend makes everything even more special.",
+        "it": "Una scoiattolina molto protettiva verso le cose luccicanti che trova. Scoprirà che condividere la bellezza con un amico rende tutto ancora più speciale."
+      }
+    },
+    {
+      "id": "char-1783281415621-4",
+      "bookId": "whispering-forest",
+      "name": "Thumper The Rabbit",
+      "image": "/uploads/char_Thumper_1783281705580.jpg",
+      "bio": {
+        "en": "The fastest runner in the forest, always ready to boast. Thanks to Finn, he will understand that true victory is crossing the finish line together with others.",
+        "it": "Il corridore più veloce della foresta, sempre pronto a vantarsi. Grazie a Finn capirà che la vera vittoria è tagliare il traguardo insieme agli altri."
+      }
+    },
+    {
+      "id": "char-1783281415621-5",
+      "bookId": "whispering-forest",
+      "name": "Rook The Crow",
+      "image": "/uploads/char_Rook_1783281720147.jpg",
+      "bio": {
+        "en": "A proud crow who prefers to blame others when his nest breaks. He will learn to seek the truth and the importance of teamwork.",
+        "it": "Un corvo orgoglioso che preferisce incolpare gli altri quando il suo nido si rompe. Imparerà a cercare la verità e l'importanza del lavoro di squadra."
+      }
+    },
+    {
+      "id": "char-1783281415621-6",
+      "bookId": "whispering-forest",
+      "name": "Jake The Bear Cub",
+      "image": "/uploads/char_Jake_1783281740460.jpg",
+      "bio": {
+        "en": "A cub who does everything to prove he has grown big and strong. He will realize that true strength lies in knowing when to ask for help.",
+        "it": "Un cucciolo che fa di tutto per dimostrare di essere diventato grande e forte. Capirà che la vera forza sta nel sapere quando farsi aiutare."
+      }
+    },
+    {
+      "id": "char-1783281415621-7",
+      "bookId": "whispering-forest",
+      "name": "Luna The Raccoon",
+      "image": "/uploads/char_Luna_1783281767479.jpg",
+      "bio": {
+        "en": "A theatrical raccoon who creates false alarms just to get attention. She will discover that stories should be used to help, not to scare just to be noticed.",
+        "it": "Un procione teatrale che crea falsi allarmi pur di attirare l'attenzione su di sé. Scoprirà che le storie devono servire ad aiutare, non a spaventare per farsi notare."
+      }
+    },
+    {
+      "id": "char-1783281415621-8",
+      "bookId": "whispering-forest",
+      "name": "Cliff The Beaver",
+      "image": "/uploads/char_Cliff_1783281785655.jpg",
+      "bio": {
+        "en": "A tireless builder who blocks the entire river out of fear of the rising water. He will learn that seeking the right balance protects everyone much better than insurmountable walls.",
+        "it": "Un costruttore instancabile, che per paura dell'acqua blocca l'intero fiume. Imparerà che cercare il giusto equilibrio protegge tutti molto più dei muri insormontabili."
+      }
+    },
+    {
+      "id": "char-1783281415621-9",
+      "bookId": "whispering-forest",
+      "name": "Echo The Bat",
+      "image": "/uploads/char_Echo_1783281809421.jpg",
+      "bio": {
+        "en": "A little bat who tries to scare animals in her dark cave to feel important. By coming out into the light, she will discover she can shine without causing fear.",
+        "it": "Una piccola pipistrello che cerca di spaventare gli animali nella sua grotta scura per sentirsi importante. Uscendo alla luce, scoprirà di poter brillare senza incutere timore."
+      }
+    },
+    {
+      "id": "char-1783281415621-10",
+      "bookId": "whispering-forest",
+      "name": "Willow The Deer",
+      "image": "/uploads/char_Willow_1783281831896.jpg",
+      "bio": {
+        "en": "A shy young deer who constantly hides in the tall grass. She will find the courage to take the first step out of the shadows to enjoy the sunny meadow.",
+        "it": "Una giovane cerva timida che si nasconde perennemente nell'erba alta. Troverà il coraggio di fare il primo passo fuori dall'ombra per godersi il prato soleggiato."
+      }
+    },
+    {
+      "id": "char-1783281415621-11",
+      "bookId": "whispering-forest",
+      "name": "Theo The Chipmunk",
+      "image": "/uploads/char_Theo_1783281845725.jpg",
+      "bio": {
+        "en": "A little chipmunk who panics when he can no longer find his acorns. He will learn that a racing mind finds no answers, and that patience clears the thoughts.",
+        "it": "Un piccolo scoiattolo che va nel panico quando non trova più le sue ghiande. Imparerà che una mente agitata non trova risposte, e che la pazienza schiarisce le idee."
+      }
+    },
+    {
+      "id": "char-1783281415621-12",
+      "bookId": "whispering-forest",
+      "name": "Glimmer The Firefly",
+      "image": "/uploads/char_Glimmer_1783281862541.jpg",
+      "bio": {
+        "en": "A firefly who shines blindingly bright for fear of being forgotten. She will discover that the best light is not the one that blinds, but the warm one that gently guides others.",
+        "it": "Una lucciola che brilla in modo accecante per paura di essere dimenticata. Scoprirà che la luce migliore non è quella che abbaglia, ma quella calda che guida dolcemente gli altri."
+      }
+    },
+    {
+      "id": "char-1783281415621-13",
+      "bookId": "whispering-forest",
+      "name": "Ash The Wolf",
+      "image": "/uploads/char_Ash_1783281884012.jpg",
+      "bio": {
+        "en": "A young wolf who guards a fallen tree on his favorite path for fear of forgetting the good times. He will realize that you can move forward while keeping your memories intact.",
+        "it": "Un giovane lupo che sorveglia un albero caduto sul suo sentiero preferito per paura di dimenticare i bei tempi. Capirà che si può andare avanti mantenendo intatti i ricordi."
+      }
+    },
+    {
+      "id": "char-1783281415621-14",
+      "bookId": "whispering-forest",
+      "name": "Glow The Turtle",
+      "image": "/uploads/char_Glow_1783281905308.jpg",
+      "bio": {
+        "en": "A turtle traumatized after slipping into the pond. Step by step, she will regain her self-confidence and the joy of swimming in peace.",
+        "it": "Una tartaruga traumatizzata dopo essere scivolata nello stagno. Passo dopo passo, ritroverà la fiducia in se stessa e la gioia di nuotare in pace."
+      }
+    },
+    {
+      "id": "char-1783281415621-15",
+      "bookId": "whispering-forest",
+      "name": "Hazel The Field Mouse",
+      "image": "/uploads/char_Hazel_1783281932547.jpg",
+      "bio": {
+        "en": "A field mouse who hides seeds everywhere for fear of losing them. She will learn that sharing and mutual help provide much more security than isolation.",
+        "it": "Un topolino di campo che nasconde i semi ovunque per paura di perderli. Imparerà che la condivisione e l'aiuto reciproco donano molta più sicurezza dell'isolamento."
+      }
+    },
+    {
+      "id": "char-1783281415621-16",
+      "bookId": "whispering-forest",
+      "name": "Frost The Arctic Fox",
+      "image": "/uploads/char_Frost_1783281952149.jpg",
+      "bio": {
+        "en": "A cub with pure white fur who misses the snow. He will learn to adapt to the new environment, discovering that home is the place where you learn to belong.",
+        "it": "Un cucciolo dalla candida pelliccia bianca che sente la mancanza della neve. Imparerà ad adattarsi al nuovo ambiente scoprendo che casa è il posto in cui si impara ad appartenere."
+      }
+    },
+    {
+      "id": "char-1783281415621-17",
+      "bookId": "whispering-forest",
+      "name": "Ivy The Snake",
+      "image": "/uploads/char_Ivy_1783281971361.jpg",
+      "bio": {
+        "en": "A snake who blocks the path with tangled vines to defend herself from others. She will discover that protecting yourself doesn't mean suffocating the life around you.",
+        "it": "Un serpente che blocca il passaggio con dei rovi aggrovigliati per difendersi dagli altri. Scoprirà che proteggersi non significa soffocare la vita che ci circonda."
+      }
+    },
+    {
+      "id": "char-1783281415621-18",
+      "bookId": "whispering-forest",
+      "name": "Storm The Mountain Goat",
+      "image": "/uploads/char_Storm_1783282006367.jpg",
+      "bio": {
+        "en": "A proud goat who isolates himself on the highest peak, thinking independence means being alone. He will realize that even the strongest mountains need to be connected to the earth.",
+        "it": "Una fiera capra che si isola sulla vetta più alta pensando che l'indipendenza significhi stare soli. Capirà che anche le montagne più forti hanno bisogno di essere connesse alla terra."
+      }
+    },
+    {
+      "id": "char-1783281415621-19",
+      "bookId": "whispering-forest",
+      "name": "Rocky The Mole",
+      "image": "/uploads/char_Rocky_1783282021628.jpg",
+      "bio": {
+        "en": "A perpetually anxious mole who digs tunnels continuously for fear of a collapse. He will learn that, to stay strong, all things need time to rest.",
+        "it": "Una talpa perennemente ansiosa che scava tunnel in continuazione per paura di un crollo. Imparerà che, per restare forti, tutte le cose hanno bisogno di tempo per riposare."
+      }
+    },
+    {
+      "id": "char-1783281415621-20",
+      "bookId": "whispering-forest",
+      "name": "Lenny The Peacock",
+      "image": "/uploads/char_Lenny_1783282044145.jpg",
+      "bio": {
+        "en": "A very vain female peacock who believes her worth lies only in her feathered display. She will discover that her true brilliance doesn't need applause, it simply resides in who she is.",
+        "it": "Una femmina di pavone molto vanitosa che crede di valere solo per il suo spettacolo piumato. Scoprirà che la sua vera brillantezza non ha bisogno di applausi, risiede semplicemente in ciò che è."
+      }
+    },
+    {
+      "id": "char-1783281415621-21",
+      "bookId": "whispering-forest",
+      "name": "Jame The Young Fox",
+      "image": "/uploads/char_Jame_1783282068680.jpg",
+      "bio": {
+        "en": "A little fox who builds a solitary den to prove he is independent. He will realize that growing up doesn't mean having to leave family behind.",
+        "it": "Una piccola volpe che costruisce una tana solitaria per dimostrare di essere indipendente. Capirà che crescere non significa dover lasciare la famiglia alle proprie spalle."
+      }
+    },
+    {
+      "id": "char-1783281415621-22",
+      "bookId": "whispering-forest",
+      "name": "Shade The Panther",
+      "image": "/uploads/char_Shade_1783282087604.jpg",
+      "bio": {
+        "en": "A stylized panther who stays hidden in the shadows for fear of disappointing expectations. Thanks to friendship, she will find the courage to step into the light and connect with the world.",
+        "it": "Una pantera stilizzata che resta nascosta nell'ombra per paura di deludere le aspettative. Grazie all'amicizia, troverà il coraggio di uscire alla luce e connettersi col mondo."
+      }
+    },
+    {
+      "id": "char-1783281415621-23",
+      "bookId": "whispering-forest",
+      "name": "Shelly The Duckling",
+      "image": "/uploads/char_Shelly_1783282118020.jpg",
+      "bio": {
+        "en": "A little duck who is insecure because her shell broke too early. She will discover that cracks are not mistakes or wounds, but wonderful openings to a new life.",
+        "it": "Una piccola anatra insicura perché il suo guscio si è rotto troppo presto. Scoprirà che le crepe non sono errori o ferite, ma meravigliose aperture verso una nuova vita."
+      }
+    },
+    {
+      "id": "char-1783281415621-24",
+      "bookId": "whispering-forest",
+      "name": "Glacier The Otter",
+      "image": "/uploads/char_Glacier_1783282138316.jpg",
+      "bio": {
+        "en": "An otter who loses his smile when winter freezes his beloved stream. He will learn that seasons don't change who we are, they just teach us how to adapt.",
+        "it": "Una lontra che perde il sorriso quando l'inverno congela il suo amato ruscello. Imparerà che le stagioni non cambiano chi siamo, ci insegnano solo ad adattarci."
+      }
+    },
+    {
+      "id": "char-1783281415621-25",
+      "bookId": "whispering-forest",
+      "name": "Ember The Dragon",
+      "image": "/uploads/char_Ember_1783282163080.jpg",
+      "bio": {
+        "en": "A small dragon cub who tries to suppress his fire so as not to hurt anyone. He will realize that his power shouldn't be hidden or feared, but embraced and guided to warm those he loves.",
+        "it": "Un piccolo cucciolo di drago che cerca di reprimere il suo fuoco per non ferire nessuno. Capirà che il proprio potere non va nascosto o temuto, ma accolto e guidato per scaldare chi ama."
+      }
+    },
+    {
+      "id": "char-1783281415621-26",
+      "bookId": "whispering-forest",
+      "name": "Skye The Falcon",
+      "image": "/uploads/char_Skye_1783282182374.jpg",
+      "bio": {
+        "en": "A young falcon who shouts from high cliffs, convinced it's the only way to be heard. She will discover that to be truly understood, you have to get closer to the hearts of others.",
+        "it": "Un giovane falco che urla dall'alto delle scogliere convinta che sia l'unico modo per farsi ascoltare. Scoprirà che per essere capiti davvero bisogna avvicinarsi al cuore degli altri."
+      }
+    },
+    {
+      "id": "char-1783281415621-27",
+      "bookId": "whispering-forest",
+      "name": "Timber The Elk",
+      "image": "/uploads/char_Timber_1783282209647.jpg",
+      "bio": {
+        "en": "A mighty elk who feels like a failure for not being able to fix a bridge alone. He will discover the magic of community: bridges are never built in solitude.",
+        "it": "Un possente alce che si sente un fallimento per non essere riuscito a riparare un ponte da solo. Scoprirà la magia della comunità: i ponti non si costruiscono mai in solitudine."
+      }
+    },
+    {
+      "id": "char-1783281415621-28",
+      "bookId": "whispering-forest",
+      "name": "Gamber The Elder Firefly",
+      "image": "/uploads/char_Gamber_1783282232115.jpg",
+      "bio": {
+        "en": "An elderly firefly whose light is fading. Finn will remind her that the brightest star is not the one that shines the most, but the one that guides others.",
+        "it": "Una lucciola ormai anziana la cui luce si sta affievolendo. Finn le ricorderà che la stella più brillante non è quella che fa più luce, ma quella che guida gli altri."
+      }
+    },
+    {
+      "id": "char-1783281415621-29",
+      "bookId": "savanna-secrets",
+      "name": "Sunny The Giraffe",
+      "image": "/uploads/char_Sunny_1783281496101.jpg",
+      "bio": {
+        "en": "A long-necked, sweet-hearted giraffe who waits with infinite patience for the return of water in the dry savanna. She teaches Finn resilience and the importance of sharing precious resources.",
+        "it": "Una giraffa dal collo lungo e dal cuore dolce, che aspetta con infinita pazienza il ritorno dell'acqua nella savana secca. Insegna a Finn la resilienza e l'importanza di condividere le risorse preziose."
+      }
+    },
+    {
+      "id": "char-1783281415621-30",
+      "bookId": "savanna-secrets",
+      "name": "Scout The Meerkat",
+      "image": "/uploads/char_Scout_1783281511162.jpg",
+      "bio": {
+        "en": "A small but brave meerkat who stands tall as a sentinel to protect his family from danger. He will prove to Finn that size means nothing when your heart is full of courage.",
+        "it": "Un piccolo ma coraggioso suricato che si erge come una sentinella per proteggere la sua famiglia dai pericoli. Dimostrerà a Finn che la statura non conta nulla quando il tuo cuore è pieno di coraggio."
+      }
     }
   ],
   "faqs": [
