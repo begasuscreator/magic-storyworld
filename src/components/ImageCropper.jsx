@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
+export default function ImageCropper({ imageSrc, onCrop, onCancel, lang, shape = 'circle' }) {
   const [scale, setScale] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -9,8 +9,11 @@ export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
   const viewportRef = useRef(null);
   const imgRef = useRef(null);
 
-  const VIEWPORT_SIZE = 300;
-  const CANVAS_SIZE = 400; // Resolution of the saved image
+  const isCircle = shape !== 'rect';
+  const VIEWPORT_W = 300;
+  const VIEWPORT_H = isCircle ? 300 : 375; // aspect ratio 4:5 for rectangular book pages
+  const CANVAS_W = 400;
+  const CANVAS_H = isCircle ? 400 : 500;
 
   // Image base dimensions when fitted to viewport
   const [baseDims, setBaseDims] = useState({ w: 0, h: 0 });
@@ -21,21 +24,22 @@ export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
     img.src = imageSrc;
     img.onload = () => {
       const ratio = img.width / img.height;
+      const vRatio = VIEWPORT_W / VIEWPORT_H;
       let w, h;
-      if (ratio > 1) {
-        // Landscape: fit height, calculate width
-        h = VIEWPORT_SIZE;
-        w = VIEWPORT_SIZE * ratio;
+      if (ratio > vRatio) {
+        // Image is wider than viewport ratio: fit height
+        h = VIEWPORT_H;
+        w = VIEWPORT_H * ratio;
       } else {
-        // Portrait/Square: fit width, calculate height
-        w = VIEWPORT_SIZE;
-        h = VIEWPORT_SIZE / ratio;
+        // Image is narrower/equal: fit width
+        w = VIEWPORT_W;
+        h = VIEWPORT_W / ratio;
       }
       setBaseDims({ w, h });
       setScale(1);
       setOffset({ x: 0, y: 0 });
     };
-  }, [imageSrc]);
+  }, [imageSrc, VIEWPORT_W, VIEWPORT_H]);
 
   // Dragging event handlers (mouse)
   const handleMouseDown = (e) => {
@@ -83,20 +87,20 @@ export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
     if (!img) return;
 
     const canvas = document.createElement('canvas');
-    canvas.width = CANVAS_SIZE;
-    canvas.height = CANVAS_SIZE;
+    canvas.width = CANVAS_W;
+    canvas.height = CANVAS_H;
     const ctx = canvas.getContext('2d');
 
     // Fill with white background (standard for JPEGs)
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
     // Math: Scale context up by the canvas-to-viewport ratio
-    const ratio = CANVAS_SIZE / VIEWPORT_SIZE;
+    const ratio = CANVAS_W / VIEWPORT_W;
     ctx.scale(ratio, ratio);
 
     // 1. Move origin to viewport center
-    ctx.translate(VIEWPORT_SIZE / 2, VIEWPORT_SIZE / 2);
+    ctx.translate(VIEWPORT_W / 2, VIEWPORT_H / 2);
     // 2. Apply drag translation
     ctx.translate(offset.x, offset.y);
     // 3. Apply zoom scale
@@ -113,12 +117,18 @@ export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
     <div className="admin-overlay" style={{ zIndex: 2000 }}>
       <div className="admin-modal" style={{ maxWidth: '450px', height: 'auto', padding: '24px', alignItems: 'center', gap: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-title)', color: 'var(--color-primary)', textAlign: 'center' }}>
-          {lang === 'it' ? 'Ritaglia Viso Personaggio' : 'Crop Character Face'}
+          {shape === 'rect' 
+            ? (lang === 'it' ? 'Ritaglia Pagina Libro' : 'Crop Book Page')
+            : (lang === 'it' ? 'Ritaglia Viso Personaggio' : 'Crop Character Face')}
         </h3>
         <p style={{ fontSize: '0.85rem', opacity: 0.7, textAlign: 'center', margin: '-10px 0 10px 0' }}>
-          {lang === 'it' 
-            ? 'Trascina l\'immagine per spostarla e usa la barra sotto per ingrandire il viso nel cerchio.' 
-            : 'Drag the image to move and use the slider below to zoom in on the face inside the circle.'}
+          {shape === 'rect'
+            ? (lang === 'it' 
+                ? 'Trascina per centrare la pagina del libro nel riquadro rettangolare.' 
+                : 'Drag to center the book page inside the rectangular frame.')
+            : (lang === 'it' 
+                ? 'Trascina l\'immagine per spostarla e usa la barra sotto per ingrandire il viso nel cerchio.' 
+                : 'Drag the image to move and use the slider below to zoom in on the face inside the circle.')}
         </p>
 
         {/* Viewport Frame Container */}
@@ -132,9 +142,9 @@ export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           style={{
-            width: `${VIEWPORT_SIZE}px`,
-            height: `${VIEWPORT_SIZE}px`,
-            borderRadius: '50%',
+            width: `${VIEWPORT_W}px`,
+            height: `${VIEWPORT_H}px`,
+            borderRadius: isCircle ? '50%' : '8px',
             overflow: 'hidden',
             position: 'relative',
             backgroundColor: '#eee',
@@ -173,7 +183,7 @@ export default function ImageCropper({ imageSrc, onCrop, onCancel, lang }) {
             right: 0,
             bottom: 0,
             border: '1px dashed rgba(255, 255, 255, 0.4)',
-            borderRadius: '50%',
+            borderRadius: isCircle ? '50%' : '8px',
             pointerEvents: 'none'
           }} />
         </div>

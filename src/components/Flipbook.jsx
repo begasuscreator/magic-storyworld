@@ -25,14 +25,11 @@ export default function Flipbook({ book, lang }) {
     );
   }
 
-  // Desktop Page Handling (Spreads of 2 pages)
-  // Index 0: Left empty/textured, Right: Page 0 (Cover)
-  // Index 2: Left: Page 1, Right: Page 2
-  // Index 4: Left: Page 3, Right: Page 4 ...
-  const maxDesktopIndex = Math.ceil(pages.length / 2) * 2;
-
+  // Desktop Page Handling (Spreads of 2 pages side-by-side)
+  // Index 0: Left: Page 0, Right: Page 1
+  // Index 2: Left: Page 2, Right: Page 3 ...
   const nextDesktop = () => {
-    if (currentPage < maxDesktopIndex - 2) {
+    if (currentPage < pages.length - 2) {
       setCurrentPage(prev => prev + 2);
     }
   };
@@ -57,8 +54,8 @@ export default function Flipbook({ book, lang }) {
   };
 
   // Get active images for desktop spread
-  const leftPageImg = currentPage === 0 ? null : pages[currentPage - 1];
-  const rightPageImg = pages[currentPage];
+  const leftPageImg = pages[currentPage];
+  const rightPageImg = currentPage + 1 < pages.length ? pages[currentPage + 1] : null;
 
   return (
     <div className="flipbook-container">
@@ -126,14 +123,14 @@ export default function Flipbook({ book, lang }) {
         <span className="flipbook-page-num">
           {isMobile 
             ? `${lang === 'it' ? 'Pagina' : 'Page'} ${mobilePage + 1} / ${pages.length}`
-            : `${lang === 'it' ? 'Pagine' : 'Pages'} ${currentPage === 0 ? 'Copertina' : `${currentPage} - ${Math.min(currentPage + 1, pages.length)}`} / ${pages.length}`
+            : `${lang === 'it' ? 'Pagine' : 'Pages'} ${currentPage + 1} - ${Math.min(currentPage + 2, pages.length)} / ${pages.length}`
           }
         </span>
 
         <button 
           className="flipbook-btn"
           onClick={isMobile ? nextMobile : nextDesktop}
-          disabled={isMobile ? mobilePage === pages.length - 1 : currentPage >= maxDesktopIndex - 2}
+          disabled={isMobile ? mobilePage === pages.length - 1 : currentPage >= pages.length - 2}
           aria-label="Successivo"
         >
           →

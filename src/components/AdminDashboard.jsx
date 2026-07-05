@@ -11,6 +11,7 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   const [cropperSrc, setCropperSrc] = useState(null);
   const [cropperFilename, setCropperFilename] = useState('');
   const [cropperCallback, setCropperCallback] = useState(null);
+  const [cropperShape, setCropperShape] = useState('circle');
 
   // Credentials (saved in localStorage)
   const [githubToken, setGithubToken] = useState(localStorage.getItem('ms_gh_token') || '');
@@ -853,7 +854,20 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                         <input 
                           type="file" 
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, (path) => setEditingBook({ ...editingBook, cover: path }))}
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              setCropperSrc(reader.result);
+                              setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                              setCropperShape('rect');
+                              setCropperCallback(() => (path) => {
+                                setEditingBook(prev => ({ ...prev, cover: path }));
+                              });
+                            };
+                            reader.readAsDataURL(file);
+                          }}
                         />
                       </div>
                       <div className="admin-input-group">
@@ -868,7 +882,20 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                         <input 
                           type="file" 
                           accept="image/*"
-                          onChange={(e) => handleImageUpload(e, (path) => setEditingBook({ ...editingBook, coloringCover: path }))}
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              setCropperSrc(reader.result);
+                              setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                              setCropperShape('rect');
+                              setCropperCallback(() => (path) => {
+                                setEditingBook(prev => ({ ...prev, coloringCover: path }));
+                              });
+                            };
+                            reader.readAsDataURL(file);
+                          }}
                         />
                       </div>
                     </div>
@@ -959,12 +986,23 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                           <input 
                             type="file" 
                             accept="image/*"
-                            onChange={(e) => handleImageUpload(e, (path) => {
-                              setEditingBook({
-                                ...editingBook,
-                                flipbookPages: [...editingBook.flipbookPages, path]
-                              });
-                            })}
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (!file) return;
+                              const reader = new FileReader();
+                              reader.onload = () => {
+                                setCropperSrc(reader.result);
+                                setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                                setCropperShape('rect');
+                                setCropperCallback(() => (path) => {
+                                  setEditingBook(prev => ({
+                                    ...prev,
+                                    flipbookPages: [...(prev.flipbookPages || []), path]
+                                  }));
+                                });
+                              };
+                              reader.readAsDataURL(file);
+                            }}
                           />
                           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
                             {editingBook.flipbookPages.map((p, idx) => (
@@ -1123,6 +1161,7 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                           reader.onload = () => {
                             setCropperSrc(reader.result);
                             setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                            setCropperShape('circle');
                             setCropperCallback(() => (path) => {
                               setEditingChar(prev => ({ ...prev, image: path }));
                             });
@@ -1432,6 +1471,7 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                           reader.onload = () => {
                             setCropperSrc(reader.result);
                             setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                            setCropperShape('rect');
                             setCropperCallback(() => (path) => {
                               setEditingBonus(prev => ({ ...prev, image: path }));
                             });
