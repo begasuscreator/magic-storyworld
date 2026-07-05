@@ -1,6 +1,6 @@
 {
   "settings": {
-    "title": "Magic Storyworld",
+    "title": "Magic Storyworld Kids",
     "subtitle": {
       "en": "Educational Stories, Music & Relaxation for Kids",
       "it": "Storie Educative, Musica e Rilassamento per Bambini"
@@ -14,7 +14,7 @@
     "githubRepo": "",
     "socials": {
       "youtube": "https://youtube.com/@magicstoryworldforkids",
-      "spotify": "https://open.spotify.com/artist/magicstoryworld",
+      "spotify": "https://open.spotify.com/intl-it/artist/2dYANl5cwMS2zojxg6X3SO?si=yb5StbeNS1KqSnR6E0-Edg",
       "audible": "https://www.audible.com",
       "amazon": "https://www.amazon.com"
     },
@@ -87,7 +87,7 @@
       "id": "finn-fox",
       "bookId": "whispering-forest",
       "name": "Finn the Fox / Finn la Volpe",
-      "image": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=400&q=80",
+      "image": "/uploads/Finn_jpg_1783279169942.jpg",
       "bio": {
         "en": "Finn is a curious and energetic young fox who loves exploring. Sometimes he gets ahead of himself and needs to learn to ask his friends for help.",
         "it": "Finn è una volpe giovane, curiosa ed energica che ama esplorare. A volte sopravvaluta le sue forze e deve imparare a chiedere aiuto ai suoi amici."
@@ -97,7 +97,7 @@
       "id": "ollie-owl",
       "bookId": "whispering-forest",
       "name": "Ollie the Owl / Ollie il Gufo",
-      "image": "https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=400&q=80",
+      "image": "/uploads/Ollie_jpg_1783279193094.jpg",
       "bio": {
         "en": "Ollie is the oldest and wisest owl in the forest. He guides Finn and the other animals with patience, teaching them that asking for help is a sign of bravery.",
         "it": "Ollie è il gufo più anziano e saggio della foresta. Guida Finn e gli altri animali con pazienza, insegnando loro che chiedere aiuto è un segno di coraggio."
