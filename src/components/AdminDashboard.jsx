@@ -16,11 +16,13 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   const [books, setBooks] = useState(JSON.parse(JSON.stringify(data.books)));
   const [characters, setCharacters] = useState(JSON.parse(JSON.stringify(data.characters)));
   const [faqs, setFaqs] = useState(JSON.parse(JSON.stringify(data.faqs)));
+  const [bonuses, setBonuses] = useState(JSON.parse(JSON.stringify(data.bonuses || [])));
 
   // Form states for items (CRUD)
   const [editingBook, setEditingBook] = useState(null); // book object or 'new'
   const [editingChar, setEditingChar] = useState(null); // char object or 'new'
   const [editingFaq, setEditingFaq] = useState(null);   // faq object or 'new'
+  const [editingBonus, setEditingBonus] = useState(null); // bonus object or 'new'
 
   // Queued file uploads in this session
   const [queuedUploads, setQueuedUploads] = useState([]);
@@ -164,7 +166,8 @@ export default function AdminDashboard({ data, onSave, onClose }) {
         settings,
         books,
         characters,
-        faqs
+        faqs,
+        bonuses
       };
 
       const dataJsonBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(finalData, null, 2))));
@@ -243,6 +246,25 @@ export default function AdminDashboard({ data, onSave, onClose }) {
     }
   };
 
+  // CRUD handlers: Bonuses
+  const saveBonus = (e) => {
+    e.preventDefault();
+    if (editingBonus === 'new') {
+      const newId = editingBonus.id || `bonus-${Date.now()}`;
+      const newBonusObj = { ...editingBonus, id: newId };
+      setBonuses(prev => [...prev, newBonusObj]);
+    } else {
+      setBonuses(prev => prev.map(b => b.id === editingBonus.id ? editingBonus : b));
+    }
+    setEditingBonus(null);
+  };
+
+  const deleteBonus = (id) => {
+    if (confirm('Are you sure you want to delete this bonus?')) {
+      setBonuses(prev => prev.filter(b => b.id !== id));
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="admin-overlay">
@@ -307,6 +329,12 @@ export default function AdminDashboard({ data, onSave, onClose }) {
               onClick={() => setActiveTab('faqs')}
             >
               ❓ AEO FAQs
+            </button>
+            <button 
+              className={`admin-tab-btn ${activeTab === 'bonuses' ? 'active' : ''}`}
+              onClick={() => setActiveTab('bonuses')}
+            >
+              🎁 Manage Bonuses
             </button>
             <button 
               className={`admin-tab-btn ${activeTab === 'publish' ? 'active' : ''}`}
@@ -471,6 +499,39 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                         ...settings, 
                         socials: { ...settings.socials, audible: e.target.value } 
                       })}
+                    />
+                  </div>
+                </div>
+
+                <hr style={{ margin: '15px 0', border: '0', borderTop: '1px solid #ddd' }} />
+                <h4>Ecosystem YouTube Videos</h4>
+                <div className="admin-row">
+                  <div className="admin-input-group">
+                    <label>YouTube Video 1 URL (Bedtime / Story)</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      placeholder="https://www.youtube.com/watch?v=..."
+                      value={settings.videos?.[0] || ''}
+                      onChange={(e) => {
+                        const newVideos = [...(settings.videos || ['', ''])];
+                        newVideos[0] = e.target.value;
+                        setSettings({ ...settings, videos: newVideos });
+                      }}
+                    />
+                  </div>
+                  <div className="admin-input-group">
+                    <label>YouTube Video 2 URL (Relaxation / Study)</label>
+                    <input 
+                      type="text" 
+                      className="admin-input" 
+                      placeholder="https://www.youtube.com/watch?v=..."
+                      value={settings.videos?.[1] || ''}
+                      onChange={(e) => {
+                        const newVideos = [...(settings.videos || ['', ''])];
+                        newVideos[1] = e.target.value;
+                        setSettings({ ...settings, videos: newVideos });
+                      }}
                     />
                   </div>
                 </div>
@@ -1067,6 +1128,130 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                         <div className="admin-item-actions" style={{ flexShrink: 0 }}>
                           <button className="admin-btn admin-btn-edit" onClick={() => setEditingFaq(f)}>Edit</button>
                           <button className="admin-btn admin-btn-delete" onClick={() => deleteFaq(f.id)}>Delete</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab: Bonuses */}
+            {activeTab === 'bonuses' && (
+              <div className="admin-pane">
+                <div className="admin-list-header">
+                  <h3>Manage Free Bonuses Catalogue</h3>
+                  {!editingBonus && (
+                    <button 
+                      className="admin-btn admin-btn-add"
+                      onClick={() => setEditingBonus({
+                        title: { en: '', it: '' },
+                        description: { en: '', it: '' },
+                        image: ''
+                      })}
+                    >
+                      + Add Bonus
+                    </button>
+                  )}
+                </div>
+
+                {editingBonus ? (
+                  <form onSubmit={saveBonus} className="admin-form-box">
+                    <h4>{editingBonus.id ? 'Edit Bonus' : 'Add New Bonus'}</h4>
+                    
+                    <div className="admin-row">
+                      <div className="admin-input-group">
+                        <label>Title (English)</label>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          required
+                          value={editingBonus.title.en}
+                          onChange={(e) => setEditingBonus({
+                            ...editingBonus,
+                            title: { ...editingBonus.title, en: e.target.value }
+                          })}
+                        />
+                      </div>
+                      <div className="admin-input-group">
+                        <label>Titolo (Italiano)</label>
+                        <input 
+                          type="text" 
+                          className="admin-input" 
+                          required
+                          value={editingBonus.title.it}
+                          onChange={(e) => setEditingBonus({
+                            ...editingBonus,
+                            title: { ...editingBonus.title, it: e.target.value }
+                          })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-row">
+                      <div className="admin-input-group">
+                        <label>Description (English)</label>
+                        <textarea 
+                          className="admin-input" 
+                          rows="3"
+                          required
+                          value={editingBonus.description.en}
+                          onChange={(e) => setEditingBonus({
+                            ...editingBonus,
+                            description: { ...editingBonus.description, en: e.target.value }
+                          })}
+                        />
+                      </div>
+                      <div className="admin-input-group">
+                        <label>Descrizione (Italiano)</label>
+                        <textarea 
+                          className="admin-input" 
+                          rows="3"
+                          required
+                          value={editingBonus.description.it}
+                          onChange={(e) => setEditingBonus({
+                            ...editingBonus,
+                            description: { ...editingBonus.description, it: e.target.value }
+                          })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-input-group">
+                      <label>Bonus Cover Image</label>
+                      <input 
+                        type="text" 
+                        className="admin-input" 
+                        placeholder="Image URL or upload below"
+                        value={editingBonus.image}
+                        onChange={(e) => setEditingBonus({ ...editingBonus, image: e.target.value })}
+                      />
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, (path) => setEditingBonus({ ...editingBonus, image: path }))}
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
+                      <button type="submit" className="admin-btn admin-btn-add">Save Bonus</button>
+                      <button type="button" className="admin-btn btn-secondary" onClick={() => setEditingBonus(null)}>Cancel</button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="admin-card-list">
+                    {bonuses.map(b => (
+                      <div key={b.id} className="admin-list-item">
+                        <div className="admin-list-item-info">
+                          <img src={b.image} alt="" className="admin-list-thumb" />
+                          <div>
+                            <strong>{b.title.en}</strong>
+                            <div style={{ fontSize: '0.8rem', opacity: 0.6 }}>ID: {b.id}</div>
+                          </div>
+                        </div>
+                        <div className="admin-item-actions">
+                          <button className="admin-btn admin-btn-edit" onClick={() => setEditingBonus(b)}>Edit</button>
+                          <button className="admin-btn admin-btn-delete" onClick={() => deleteBonus(b.id)}>Delete</button>
                         </div>
                       </div>
                     ))}

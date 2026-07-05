@@ -25,7 +25,11 @@
       "textColor": "#1b4332",
       "accentColor": "#e9d8a6",
       "fontFamily": "'Outfit', sans-serif"
-    }
+    },
+    "videos": [
+      "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    ]
   },
   "books": [
     {
@@ -430,6 +434,32 @@
         "en": "The cross-platform system lets children read the book, watch the animations, listen to the audiobooks, and enjoy the soundtrack, reinforcing the emotional lessons through sight, sound, and reading.",
         "it": "Il sistema cross-platform consente ai bambini di leggere il libro, guardare le animazioni, ascoltare gli audiolibri e godersi la colonna sonora, rafforzando le lezioni emotive attraverso la vista, l'udito e la lettura."
       }
+    }
+  ],
+  "bonuses": [
+    {
+      "id": "bonus-coloring-book",
+      "title": {
+        "en": "Digital Coloring Book (PDF)",
+        "it": "Libro da colorare digitale (PDF)"
+      },
+      "description": {
+        "en": "Download 30 printable coloring pages featuring Finn and Ollie inside the Whispering Forest.",
+        "it": "Scarica 30 pagine da colorare stampabili con Finn e Ollie all'interno della Foresta dei Sussurri."
+      },
+      "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80"
+    },
+    {
+      "id": "bonus-mini-stories",
+      "title": {
+        "en": "Illustrated Mini-Stories Collection",
+        "it": "Raccolta di Ministorie illustrate"
+      },
+      "description": {
+        "en": "Short stories with beautiful illustrations to read together before bedtime.",
+        "it": "Brevi storie con bellissime illustrazioni da leggere insieme prima della buonanotte."
+      },
+      "image": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80"
     }
   ]
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function CharacterList({ books, characters, lang }) {
+export default function CharacterList({ books, characters, lang, onBookClick }) {
   // Find books that have characters
   const booksWithCharacters = books.filter(b => 
     characters.some(c => c.bookId === b.id)
@@ -70,10 +70,27 @@ export default function CharacterList({ books, characters, lang }) {
               </div>
               <div className="char-content">
                 <h3 className="char-name">{char.name}</h3>
-                {selectedBookId === 'all' && bookTitle && (
-                  <span className="hero-badge" style={{ fontSize: '0.75rem', padding: '3px 8px', alignSelf: 'flex-start', margin: '4px 0' }}>
-                    {bookTitle}
-                  </span>
+                {associatedBook && (
+                  <button 
+                    type="button"
+                    onClick={() => onBookClick && onBookClick(associatedBook)}
+                    className="char-book-link"
+                    style={{ 
+                      background: 'none', 
+                      border: 'none', 
+                      color: 'var(--color-primary)', 
+                      fontWeight: '700', 
+                      textDecoration: 'underline',
+                      padding: 0,
+                      cursor: 'pointer',
+                      fontSize: '0.85rem',
+                      textAlign: 'left',
+                      alignSelf: 'flex-start',
+                      margin: '4px 0 8px 0'
+                    }}
+                  >
+                    📖 {lang === 'it' ? `Dal libro: ${bookTitle}` : `From the book: ${bookTitle}`}
+                  </button>
                 )}
                 <p className="char-bio">{bio}</p>
               </div>

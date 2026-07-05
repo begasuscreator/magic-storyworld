@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function NewsletterForm({ webhookUrl, lang }) {
+export default function NewsletterForm({ webhookUrl, lang, bonuses = [], selectedBonusId, setSelectedBonusId }) {
   const [email, setEmail] = useState('');
-  const [bonusType, setBonusType] = useState('coloring-book');
+  const [bonusType, setBonusType] = useState('bonus-coloring-book');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error
   const [message, setMessage] = useState('');
+
+  // Sync state if parent changes selected bonus
+  useEffect(() => {
+    if (selectedBonusId) {
+      setBonusType(selectedBonusId);
+    } else if (bonuses.length > 0) {
+      setBonusType(bonuses[0].id);
+    }
+  }, [selectedBonusId, bonuses]);
+
+  const handleSelectChange = (e) => {
+    const val = e.target.value;
+    setBonusType(val);
+    if (setSelectedBonusId) {
+      setSelectedBonusId(val);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,15 +110,28 @@ export default function NewsletterForm({ webhookUrl, lang }) {
           id="bonus-select"
           className="form-select"
           value={bonusType}
-          onChange={(e) => setBonusType(e.target.value)}
+          onChange={handleSelectChange}
           disabled={status === 'loading'}
         >
-          <option value="coloring-book">
-            {lang === 'it' ? '🎨 Libro da colorare digitale (PDF)' : '🎨 Digital Coloring Book (PDF)'}
-          </option>
-          <option value="mini-stories">
-            {lang === 'it' ? '📖 Raccolta di Ministorie illustrate' : '📖 Illustrated Mini-Stories Collection'}
-          </option>
+          {bonuses.length > 0 ? (
+            bonuses.map(b => {
+              const title = b.title[lang] || b.title['en'];
+              return (
+                <option key={b.id} value={b.id}>
+                  🎁 {title}
+                </option>
+              );
+            })
+          ) : (
+            <>
+              <option value="bonus-coloring-book">
+                {lang === 'it' ? '🎨 Libro da colorare digitale (PDF)' : '🎨 Digital Coloring Book (PDF)'}
+              </option>
+              <option value="bonus-mini-stories">
+                {lang === 'it' ? '📖 Raccolta di Ministorie illustrate' : '📖 Illustrated Mini-Stories Collection'}
+              </option>
+            </>
+          )}
         </select>
       </div>
 

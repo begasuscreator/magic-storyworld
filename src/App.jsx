@@ -15,6 +15,7 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [activeFlipbookBook, setActiveFlipbookBook] = useState(null);
   const [showAdminLink, setShowAdminLink] = useState(false);
+  const [selectedBonusId, setSelectedBonusId] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -95,10 +96,28 @@ export default function App() {
     );
   }
 
-  const { settings, books, characters, faqs } = data;
+  const { settings, books, characters, faqs, bonuses = [] } = data;
   const latestBook = books.find((b) => b.isLatest) || books[0];
   const teaserBook = books.find((b) => b.isTeaser);
   const regularBooks = books.filter((b) => !b.isTeaser);
+  const videos = settings.videos || [];
+
+  const getYoutubeEmbedUrl = (url) => {
+    if (!url) return '';
+    if (url.includes('embed/')) return url;
+    let videoId = '';
+    if (url.includes('watch?v=')) {
+      videoId = url.split('watch?v=')[1]?.split('&')[0];
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1]?.split('?')[0];
+    }
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+  };
+
+  const handleCharacterBookClick = (book) => {
+    setActiveFlipbookBook(book);
+    document.getElementById('flipbook')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   // Translations helpers
   const t = {
@@ -125,7 +144,12 @@ export default function App() {
     navBooks: { en: 'Books', it: 'Libri' },
     navCharacters: { en: 'Characters', it: 'Personaggi' },
     navFaq: { en: 'FAQs', it: 'Domande Frequenti' },
-    allRights: { en: 'All rights reserved.', it: 'Tutti i diritti riservati.' }
+    allRights: { en: 'All rights reserved.', it: 'Tutti i diritti riservati.' },
+    videosTitle: { en: 'Featured Videos', it: 'Video Consigliati' },
+    videosSubtitle: { en: 'Watch our magical animated stories and relaxation loops directly on YouTube.', it: 'Guarda le nostre storie animate e i loop rilassanti direttamente da YouTube.' },
+    bonusesTitle: { en: 'Free Bonuses & Gifts', it: 'Regali e Bonus Gratuiti' },
+    bonusesSubtitle: { en: 'Get exclusive access to printable coloring books and bedtime stories.', it: 'Ottieni l\'accesso esclusivo a libri da colorare stampabili e ministorie della buonanotte.' },
+    getBonusBtn: { en: 'Get Free Bonus', it: 'Ottieni Regalo Gratis' }
   };
 
   const getTranslation = (key) => t[key]?.[lang] || t[key]?.['en'] || '';
@@ -212,6 +236,54 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* Featured Videos Section */}
+      {videos.length > 0 && (
+        <section id="videos" className="videos-section" style={{ background: 'var(--color-white)' }}>
+          <div className="container">
+            <h2 className="section-title">{getTranslation('videosTitle')}</h2>
+            <p className="section-subtitle">{getTranslation('videosSubtitle')}</p>
+            
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+              gap: '32px', 
+              maxWidth: '900px', 
+              margin: '0 auto' 
+            }}>
+              {videos.map((url, idx) => {
+                const embedUrl = getYoutubeEmbedUrl(url);
+                return (
+                  <div key={idx} style={{ 
+                    position: 'relative', 
+                    paddingBottom: '56.25%', 
+                    height: '0', 
+                    overflow: 'hidden', 
+                    borderRadius: 'var(--radius-md)',
+                    boxShadow: 'var(--shadow-md)'
+                  }}>
+                    <iframe
+                      src={embedUrl}
+                      title={`YouTube Video ${idx + 1}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      style={{ 
+                        position: 'absolute', 
+                        top: '0', 
+                        left: '0', 
+                        width: '100%', 
+                        height: '100%', 
+                        border: 'none' 
+                      }}
+                    ></iframe>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Interactive Flipbook Section */}
       {activeFlipbookBook && activeFlipbookBook.flipbookPages && activeFlipbookBook.flipbookPages.length > 0 && (
@@ -304,7 +376,50 @@ export default function App() {
           <div className="container">
             <h2 className="section-title">{getTranslation('charTitle')}</h2>
             <p className="section-subtitle">{getTranslation('charSubtitle')}</p>
-            <CharacterList books={books} characters={characters} lang={lang} />
+            <CharacterList books={books} characters={characters} lang={lang} onBookClick={handleCharacterBookClick} />
+          </div>
+        </section>
+      )}
+
+      {/* Free Bonuses Catalogue */}
+      {bonuses && bonuses.length > 0 && (
+        <section id="bonuses" className="bonuses-section" style={{ background: 'var(--color-bg)' }}>
+          <div className="container">
+            <h2 className="section-title">{getTranslation('bonusesTitle')}</h2>
+            <p className="section-subtitle">{getTranslation('bonusesSubtitle')}</p>
+            
+            <div className="books-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))' }}>
+              {bonuses.map((bonus) => {
+                const title = bonus.title[lang] || bonus.title['en'];
+                const desc = bonus.description[lang] || bonus.description['en'];
+                return (
+                  <div key={bonus.id} className="book-card" style={{ background: 'var(--color-white)' }}>
+                    <img 
+                      src={bonus.image || 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80'} 
+                      alt={title} 
+                      className="book-card-image"
+                      loading="lazy"
+                    />
+                    <div className="book-card-content">
+                      <h3 className="book-card-title">{title}</h3>
+                      <p className="book-card-desc">{desc}</p>
+                      
+                      <button 
+                        type="button"
+                        onClick={() => {
+                          setSelectedBonusId(bonus.id);
+                          document.getElementById('newsletter')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="btn btn-primary"
+                        style={{ padding: '10px', fontSize: '0.9rem', justifyContent: 'center', width: '100%', cursor: 'pointer' }}
+                      >
+                        🎁 {getTranslation('getBonusBtn')}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
       )}
@@ -332,9 +447,13 @@ export default function App() {
             </div>
           </div>
           
-          <div className="funnel-form-wrapper">
-            <NewsletterForm webhookUrl={settings.n8nWebhookUrl} lang={lang} />
-          </div>
+            <NewsletterForm 
+              webhookUrl={settings.n8nWebhookUrl} 
+              lang={lang} 
+              bonuses={bonuses} 
+              selectedBonusId={selectedBonusId}
+              setSelectedBonusId={setSelectedBonusId}
+            />
         </div>
       </section>
 
