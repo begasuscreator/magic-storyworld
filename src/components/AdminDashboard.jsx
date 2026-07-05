@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ImageCropper from './ImageCropper';
 
 export default function AdminDashboard({ data, onSave, onClose }) {
   const [activeTab, setActiveTab] = useState('settings');
@@ -6,6 +7,11 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   const [passwordInput, setPasswordInput] = useState('');
   const [loginError, setLoginError] = useState(false);
   
+  // Image cropper states
+  const [cropperSrc, setCropperSrc] = useState(null);
+  const [cropperFilename, setCropperFilename] = useState('');
+  const [cropperCallback, setCropperCallback] = useState(null);
+
   // Credentials (saved in localStorage)
   const [githubToken, setGithubToken] = useState(localStorage.getItem('ms_gh_token') || '');
   const [githubRepo, setGithubRepo] = useState(localStorage.getItem('ms_gh_repo') || ''); // format: owner/repo
@@ -89,6 +95,22 @@ export default function AdminDashboard({ data, onSave, onClose }) {
       console.error(err);
       alert('Error reading image file');
     }
+  };
+
+  const handleCropComplete = (croppedDataUrl) => {
+    const base64 = croppedDataUrl.split(',')[1];
+    const uniqueFilename = `char_${cropperFilename || 'avatar'}_${Date.now()}.jpg`;
+    const relativePath = `/uploads/${uniqueFilename}`;
+
+    setQueuedUploads(prev => [...prev, {
+      filename: uniqueFilename,
+      base64: base64
+    }]);
+
+    if (cropperCallback) {
+      cropperCallback(relativePath);
+    }
+    setCropperSrc(null);
   };
 
   // GitHub API Helpers
@@ -994,7 +1016,19 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                       <input 
                         type="file" 
                         accept="image/*"
-                        onChange={(e) => handleImageUpload(e, (path) => setEditingChar({ ...editingChar, image: path }))}
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          const reader = new FileReader();
+                          reader.onload = () => {
+                            setCropperSrc(reader.result);
+                            setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                            setCropperCallback(() => (path) => {
+                              setEditingChar(prev => ({ ...prev, image: path }));
+                            });
+                          };
+                          reader.readAsDataURL(file);
+                        }}
                       />
                     </div>
 
@@ -1229,7 +1263,19 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                       <input 
                         type="file" 
                         accept="image/*"
-                        onChange={(e) => handleImageUpload(e, (path) => setEditingBonus({ ...editingBonus, image: path }))}
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (!file) return;
+                          const reader = new FileReader();
+                          reader.onload = () => {
+                            setCropperSrc(reader.result);
+                            setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
+                            setCropperCallback(() => (path) => {
+                              setEditingBonus(prev => ({ ...prev, image: path }));
+                            });
+                          };
+                          reader.readAsDataURL(file);
+                        }}
                       />
                     </div>
 
@@ -1343,6 +1389,14 @@ export default function AdminDashboard({ data, onSave, onClose }) {
           </div>
         </div>
       </div>
+      {cropperSrc && (
+        <ImageCropper
+          imageSrc={cropperSrc}
+          lang="it"
+          onCancel={() => setCropperSrc(null)}
+          onCrop={handleCropComplete}
+        />
+      )}
     </div>
   );
 }
