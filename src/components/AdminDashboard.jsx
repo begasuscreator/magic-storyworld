@@ -304,8 +304,8 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   // CRUD handlers: Books
   const saveBook = (e) => {
     e.preventDefault();
-    if (editingBook === 'new') {
-      const newId = editingBook.id || `book-${Date.now()}`;
+    if (!editingBook.id) {
+      const newId = `book-${Date.now()}`;
       const newBookObj = { ...editingBook, id: newId };
       setBooks(prev => [...prev, newBookObj]);
     } else {
@@ -324,8 +324,8 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   // CRUD handlers: Characters
   const saveCharacter = (e) => {
     e.preventDefault();
-    if (editingChar === 'new') {
-      const newId = editingChar.id || `char-${Date.now()}`;
+    if (!editingChar.id) {
+      const newId = `char-${Date.now()}`;
       const newCharObj = { ...editingChar, id: newId };
       setCharacters(prev => [...prev, newCharObj]);
     } else {
@@ -343,8 +343,8 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   // CRUD handlers: FAQs
   const saveFaq = (e) => {
     e.preventDefault();
-    if (editingFaq === 'new') {
-      const newId = editingFaq.id || `faq-${Date.now()}`;
+    if (!editingFaq.id) {
+      const newId = `faq-${Date.now()}`;
       const newFaqObj = { ...editingFaq, id: newId };
       setFaqs(prev => [...prev, newFaqObj]);
     } else {
@@ -362,9 +362,10 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   // CRUD handlers: Bonuses
   const saveBonus = (e) => {
     e.preventDefault();
-    if (editingBonus === 'new') {
+    if (editingBonus.isNew) {
       const newId = editingBonus.id || `bonus-${Date.now()}`;
       const newBonusObj = { ...editingBonus, id: newId };
+      delete newBonusObj.isNew;
       setBonuses(prev => [...prev, newBonusObj]);
     } else {
       setBonuses(prev => prev.map(b => b.id === editingBonus.id ? editingBonus : b));
@@ -1343,6 +1344,8 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                     <button 
                       className="admin-btn admin-btn-add"
                       onClick={() => setEditingBonus({
+                        isNew: true,
+                        id: '',
                         title: { en: '', it: '' },
                         description: { en: '', it: '' },
                         image: ''
@@ -1355,8 +1358,29 @@ export default function AdminDashboard({ data, onSave, onClose }) {
 
                 {editingBonus ? (
                   <form onSubmit={saveBonus} className="admin-form-box">
-                    <h4>{editingBonus.id ? 'Edit Bonus' : 'Add New Bonus'}</h4>
+                    <h4>{editingBonus.isNew ? 'Add New Bonus' : 'Edit Bonus'}</h4>
                     
+                    <div className="admin-input-group">
+                      <label>Bonus ID / Code (Unique identifier for Airtable & N8N)</label>
+                      <input 
+                        type="text" 
+                        className="admin-input" 
+                        required
+                        placeholder="e.g. bonus-coloring-book (use lowercase, numbers, and dashes only)"
+                        disabled={!editingBonus.isNew}
+                        value={editingBonus.id || ''}
+                        onChange={(e) => {
+                          const val = e.target.value.toLowerCase().replace(/[^a-z0-9-_]/g, '');
+                          setEditingBonus({ ...editingBonus, id: val });
+                        }}
+                      />
+                      {!editingBonus.isNew && (
+                        <small style={{ opacity: 0.7, color: 'var(--color-primary)' }}>
+                          Bonus ID cannot be changed once created to prevent breaking existing integrations.
+                        </small>
+                      )}
+                    </div>
+
                     <div className="admin-row">
                       <div className="admin-input-group">
                         <label>Title (English)</label>
