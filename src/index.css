@@ -549,9 +549,11 @@ section {
 .book-card-image {
   width: 100%;
   aspect-ratio: 4/5;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  background-color: rgba(0, 0, 0, 0.015);
+  padding: 8px;
 }
 
 .book-card-content {

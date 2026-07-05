@@ -854,20 +854,7 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                         <input 
                           type="file" 
                           accept="image/*"
-                          onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (!file) return;
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                              setCropperSrc(reader.result);
-                              setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
-                              setCropperShape('rect');
-                              setCropperCallback(() => (path) => {
-                                setEditingBook(prev => ({ ...prev, cover: path }));
-                              });
-                            };
-                            reader.readAsDataURL(file);
-                          }}
+                          onChange={(e) => handleImageUpload(e, (path) => setEditingBook({ ...editingBook, cover: path }))}
                         />
                       </div>
                       <div className="admin-input-group">
@@ -882,20 +869,7 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                         <input 
                           type="file" 
                           accept="image/*"
-                          onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (!file) return;
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                              setCropperSrc(reader.result);
-                              setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
-                              setCropperShape('rect');
-                              setCropperCallback(() => (path) => {
-                                setEditingBook(prev => ({ ...prev, coloringCover: path }));
-                              });
-                            };
-                            reader.readAsDataURL(file);
-                          }}
+                          onChange={(e) => handleImageUpload(e, (path) => setEditingBook({ ...editingBook, coloringCover: path }))}
                         />
                       </div>
                     </div>
@@ -986,23 +960,12 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                           <input 
                             type="file" 
                             accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files[0];
-                              if (!file) return;
-                              const reader = new FileReader();
-                              reader.onload = () => {
-                                setCropperSrc(reader.result);
-                                setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
-                                setCropperShape('rect');
-                                setCropperCallback(() => (path) => {
-                                  setEditingBook(prev => ({
-                                    ...prev,
-                                    flipbookPages: [...(prev.flipbookPages || []), path]
-                                  }));
-                                });
-                              };
-                              reader.readAsDataURL(file);
-                            }}
+                            onChange={(e) => handleImageUpload(e, (path) => {
+                              setEditingBook({
+                                ...editingBook,
+                                flipbookPages: [...(editingBook.flipbookPages || []), path]
+                              });
+                            })}
                           />
                           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
                             {editingBook.flipbookPages.map((p, idx) => (
@@ -1464,20 +1427,7 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                       <input 
                         type="file" 
                         accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (!file) return;
-                          const reader = new FileReader();
-                          reader.onload = () => {
-                            setCropperSrc(reader.result);
-                            setCropperFilename(file.name.split('.').shift().replace(/[^a-zA-Z0-9]/g, '_'));
-                            setCropperShape('rect');
-                            setCropperCallback(() => (path) => {
-                              setEditingBonus(prev => ({ ...prev, image: path }));
-                            });
-                          };
-                          reader.readAsDataURL(file);
-                        }}
+                        onChange={(e) => handleImageUpload(e, (path) => setEditingBonus({ ...editingBonus, image: path }))}
                       />
                     </div>
 
