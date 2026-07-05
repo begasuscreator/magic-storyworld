@@ -42,19 +42,19 @@
         "en": "A beautiful collection of 30 illustrated stories about Finn the Fox and Ollie the Owl, teaching kids emotional intelligence, friendship, and how to face their fears.",
         "it": "Una bellissima raccolta di 30 storie illustrate su Finn la volpe e Ollie il gufo, che insegnano ai bambini l'intelligenza emotiva, l'amicizia e come affrontare le proprie paure."
       },
-      "cover": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80",
-      "coloringCover": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80",
+      "cover": "/uploads/Cover_ENG_eBook_1783282989680.jpg",
+      "coloringCover": "",
       "links": {
         "amazon": "https://www.amazon.com",
-        "spotify": "https://open.spotify.com/artist/magicstoryworld",
+        "spotify": "https://open.spotify.com/intl-it/artist/2dYANl5cwMS2zojxg6X3SO?si=-P4c_Y2WT-uTPEgE5xqyiA",
         "youtube": "https://youtube.com/@magicstoryworldforkids",
         "audible": "https://www.audible.com"
       },
       "flipbookPages": [
-        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=600&q=80"
+        "/uploads/Cover_ENG_eBook_1783283258473.jpg",
+        "/uploads/Lost_in_the_Whi_1783283276244.jpg",
+        "/uploads/Lost_in_the_Whi_1783283285866.jpg",
+        "/uploads/Lost_in_the_Whi_1783283291090.jpg"
       ],
       "isLatest": true,
       "isTeaser": false
