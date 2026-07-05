@@ -23,6 +23,11 @@ export default function AdminDashboard({ data, onSave, onClose }) {
   const [characters, setCharacters] = useState(JSON.parse(JSON.stringify(data.characters)));
   const [faqs, setFaqs] = useState(JSON.parse(JSON.stringify(data.faqs)));
   const [bonuses, setBonuses] = useState(JSON.parse(JSON.stringify(data.bonuses || [])));
+  
+  // CSV Import States
+  const [csvImportOpen, setCsvImportOpen] = useState(false);
+  const [importedChars, setImportedChars] = useState([]);
+  const [defaultBookForImport, setDefaultBookForImport] = useState(data.books.length > 0 ? data.books[0].id : '');
 
   // Form states for items (CRUD)
   const [editingBook, setEditingBook] = useState(null); // book object or 'new'
@@ -111,6 +116,91 @@ export default function AdminDashboard({ data, onSave, onClose }) {
       cropperCallback(relativePath);
     }
     setCropperSrc(null);
+  };
+
+  const handleCsvFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target.result;
+      const lines = text.split(/\r?\n/).filter(line => line.trim().length > 0);
+      if (lines.length === 0) return;
+
+      const firstLine = lines[0];
+      const commaCount = (firstLine.match(/,/g) || []).length;
+      const semiCount = (firstLine.match(/;/g) || []).length;
+      const separator = semiCount > commaCount ? ';' : ',';
+
+      const splitLine = (line) => {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === separator && !inQuotes) {
+            result.push(current.trim());
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+        result.push(current.trim());
+        return result.map(v => v.replace(/^"|"$/g, ''));
+      };
+
+      const headers = splitLine(lines[0]).map(h => h.toLowerCase().trim());
+      const parsedCharacters = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const values = splitLine(lines[i]);
+        if (values.length < 2) continue;
+
+        const row = {};
+        headers.forEach((header, index) => {
+          row[header] = values[index] || '';
+        });
+
+        const name = row.name || row.nome || '';
+        const bookId = row.bookid || row.book || row.libro || '';
+        const bioEn = row.bio_en || row.biografia_en || row.english || '';
+        const bioIt = row.bio_it || row.biografia_it || row.italian || row.italiano || '';
+        const image = row.image || row.immagine || '';
+
+        if (!name) continue;
+
+        parsedCharacters.push({
+          id: `char-${Date.now()}-${i}`,
+          bookId: bookId || null,
+          name,
+          image,
+          bio: {
+            en: bioEn,
+            it: bioIt
+          }
+        });
+      }
+
+      setImportedChars(parsedCharacters);
+    };
+    reader.readAsText(file);
+  };
+
+  const handleConfirmImport = () => {
+    if (importedChars.length === 0) return;
+    
+    const finalized = importedChars.map(char => ({
+      ...char,
+      bookId: char.bookId || defaultBookForImport
+    }));
+
+    setCharacters(prev => [...prev, ...finalized]);
+    setImportedChars([]);
+    setCsvImportOpen(false);
+    alert(`Successfully imported ${finalized.length} characters! Remember to Save & Publish to save changes.`);
   };
 
   // GitHub API Helpers
@@ -931,18 +1021,28 @@ export default function AdminDashboard({ data, onSave, onClose }) {
               <div className="admin-pane">
                 <div className="admin-list-header">
                   <h3>Manage Character Bios</h3>
-                  {!editingChar && (
-                    <button 
-                      className="admin-btn admin-btn-add"
-                      onClick={() => setEditingChar({
-                        bookId: books.length > 0 ? books[0].id : '',
-                        name: '',
-                        image: '',
-                        bio: { en: '', it: '' }
-                      })}
-                    >
-                      + Add Character
-                    </button>
+                  {!editingChar && !csvImportOpen && (
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button 
+                        className="admin-btn admin-btn-add"
+                        onClick={() => setEditingChar({
+                          bookId: books.length > 0 ? books[0].id : '',
+                          name: '',
+                          image: '',
+                          bio: { en: '', it: '' }
+                        })}
+                      >
+                        + Add Character
+                      </button>
+                      <button 
+                        type="button"
+                        className="admin-btn btn-secondary"
+                        onClick={() => setCsvImportOpen(true)}
+                        style={{ border: '2px solid var(--color-primary)', display: 'flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        📥 Import CSV
+                      </button>
+                    </div>
                   )}
                 </div>
 
@@ -1037,6 +1137,68 @@ export default function AdminDashboard({ data, onSave, onClose }) {
                       <button type="button" className="admin-btn btn-secondary" onClick={() => setEditingChar(null)}>Cancel</button>
                     </div>
                   </form>
+                ) : csvImportOpen ? (
+                  <div className="admin-form-box">
+                    <h4>Bulk Import Characters from CSV</h4>
+                    <p style={{ fontSize: '0.85rem', opacity: 0.8 }}>
+                      Upload a CSV file containing your character biographies. Semicolon (;) or Comma (,) separators are supported.
+                    </p>
+                    <div style={{ background: '#f5f5f5', padding: '12px', borderRadius: '4px', fontSize: '0.8rem', fontFamily: 'monospace', margin: '8px 0' }}>
+                      Required Headers: <strong>name</strong>, <strong>bio_en</strong>, <strong>bio_it</strong><br/>
+                      Optional Headers: <strong>bookId</strong>, <strong>image</strong>
+                    </div>
+                    
+                    <div className="admin-row" style={{ marginTop: '16px' }}>
+                      <div className="admin-input-group">
+                        <label>Select CSV File</label>
+                        <input 
+                          type="file" 
+                          accept=".csv"
+                          onChange={handleCsvFileSelect}
+                        />
+                      </div>
+                      
+                      <div className="admin-input-group">
+                        <label>Default Book (if bookId is empty in CSV)</label>
+                        <select 
+                          className="admin-input"
+                          value={defaultBookForImport}
+                          onChange={(e) => setDefaultBookForImport(e.target.value)}
+                        >
+                          {books.map(b => (
+                            <option key={b.id} value={b.id}>{b.title.en}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {importedChars.length > 0 && (
+                      <div style={{ marginTop: '16px', background: '#e8f5e9', border: '1px solid #c8e6c9', padding: '12px', borderRadius: '4px', color: '#2e7d32' }}>
+                        ✅ <strong>{importedChars.length}</strong> characters parsed successfully and ready to import.
+                      </div>
+                    )}
+
+                    <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
+                      <button 
+                        type="button" 
+                        className="admin-btn admin-btn-add"
+                        onClick={handleConfirmImport}
+                        disabled={importedChars.length === 0}
+                      >
+                        Confirm Import
+                      </button>
+                      <button 
+                        type="button" 
+                        className="admin-btn btn-secondary" 
+                        onClick={() => {
+                          setImportedChars([]);
+                          setCsvImportOpen(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
                 ) : (
                   <div className="admin-card-list">
                     {characters.map(c => {
