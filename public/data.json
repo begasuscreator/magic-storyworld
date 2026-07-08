@@ -16,7 +16,7 @@
       "youtube": "https://www.youtube.com/@MagicStoryworldChild",
       "spotify": "https://open.spotify.com/intl-it/artist/2dYANl5cwMS2zojxg6X3SO?si=yb5StbeNS1KqSnR6E0-Edg",
       "audible": "https://www.audible.com",
-      "amazon": "https://www.amazon.com/dp/B0H7YXGBY5"
+      "amazon": "https://www.amazon.com"
     },
     "theme": {
       "primaryColor": "#2d6a4f",
@@ -45,9 +45,9 @@
       "cover": "/uploads/Cover_ENG_eBook_1783282989680.jpg",
       "coloringCover": "",
       "links": {
-        "amazon": "https://www.amazon.com",
+        "amazon": "https://www.amazon.com/dp/B0H7YXGBY5",
         "spotify": "https://open.spotify.com/intl-it/artist/2dYANl5cwMS2zojxg6X3SO?si=-P4c_Y2WT-uTPEgE5xqyiA",
-        "youtube": "https://youtube.com/@magicstoryworldforkids",
+        "youtube": "https://www.youtube.com/playlist?list=PLBgqdbibm1GcJjVIOFjrJurWWydiwNX7g",
         "audible": "https://www.audible.com"
       },
       "flipbookPages": [
