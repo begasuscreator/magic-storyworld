@@ -461,7 +461,6 @@ export default function App() {
       <section id="faq" className="faq-section">
         <div className="container">
           <h2 className="section-title">{getTranslation('faqTitle')}</h2>
-          <p className="section-subtitle">{getTranslation('faqSubtitle')}</p>
           <FaqSection faqs={faqs} lang={lang} />
         </div>
       </section>
